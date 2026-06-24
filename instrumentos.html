@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Inventario de Instrumentos - Control Internacional Del Ecuador</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html">Control Internacional <br />
+            Del Ecuador
+        </a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar" aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#!">Salir</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Principal</div>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Panel Principal
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Gestión Operativa</div>
+                        <a class="nav-link active" href="instrumentos.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-toolbox"></i></div>
+                            Inventario de Instrumentos
+                        </a>
+
+                        <a class="nav-link" href="asignaciones.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-clipboard-check"></i></div>
+                            Asignaciones y Concurrencia
+                        </a>
+
+                        <a class="nav-link" href="calibracion_reportes.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
+                            Calibración y Reportes
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Administración</div>
+                        <a class="nav-link" href="login.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-sign-in-alt"></i></div>
+                            Iniciar Sesión (Demo)
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Proyecto Academico:</div>
+                    Grupo 6
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Inventario de Instrumentos Técnicos</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                        <li class="breadcrumb-item active">Inventario</li>
+                    </ol>
+
+                    <!-- Barra de herramientas -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <i class="fas fa-table me-1"></i>
+                            Listado de Equipos
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#modalNuevoInstrumento">
+                                <i class="fas fa-plus me-1"></i> Nuevo Instrumento
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <!-- Filtros rápidos -->
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <input type="text" id="filtroBusqueda" class="form-control"
+                                        placeholder="🔍 Buscar por serie o nombre...">
+                                </div>
+                                <div class="col-md-3">
+                                    <select id="filtroEstado" class="form-select">
+                                        <option value="">Todos los estados</option>
+                                        <option value="Disponible">Disponible</option>
+                                        <option value="En Uso">En Uso</option>
+                                        <option value="En Calibracion">En Calibración</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Tabla de instrumentos -->
+                            <div class="table-responsive">
+                                <table id="tablaInstrumentos" class="table table-striped table-bordered">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>N° Serie</th>
+                                            <th>Nombre / Modelo</th>
+                                            <th>Categoría</th>
+                                            <th>Estado</th>
+                                            <th>Venc. Calibración</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cuerpoTablaInstrumentos">
+                                        <!-- Se llena con JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para Nuevo Instrumento (Estructura base) -->
+                <div class="modal fade" id="modalNuevoInstrumento" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">Registrar Nuevo Instrumento</h5>
+                                <button type="button" class="btn-close btn-close-white"
+                                    data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formNuevoInstrumento">
+                                    <div class="mb-3">
+                                        <label class="form-label">Número de Serie</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nombre del Equipo</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Categoría</label>
+                                        <select class="form-select" required>
+                                            <option value="">Seleccione...</option>
+                                            <option>Medidores de Espesor</option>
+                                            <option>Detectores de Gases</option>
+                                            <option>Calibradores</option>
+                                            <option>Equipos END</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Fecha Vencimiento Calibración</label>
+                                        <input type="date" class="form-control" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" form="formNuevoInstrumento"
+                                    class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; UAE 2026</div>
+                        <div>
+                            <a href="#">Politica de Privacidad</a>
+                            &middot;
+                            <a href="#">Terminos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/datatables-simple-demo.js"></script>
+</body>
+
+</html>
