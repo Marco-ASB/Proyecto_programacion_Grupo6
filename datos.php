@@ -31,6 +31,20 @@ if (($_GET["token"] ?? "") !== API_TOKEN) {
 
 // ── 2. Consultas disponibles (solo lectura) ──
 $consultas = [
+     
+            "ventas" => "
+        SELECT p.id_pedidos AS id_venta, p.fecha_pedido, p.estado AS estado_pedido,
+               c.nombre AS empresa, c.apellido AS contacto, c.cedula AS ruc,
+               s.nombre AS servicio, d.cantidad, d.precio_unitario, d.subtotal, p.total AS total_factura
+        FROM pedidos p
+        JOIN clientes c ON p.cliente_id = c.id
+        JOIN pedido_detalle d ON p.id_pedidos = d.id_pedidos
+        JOIN servicios s ON d.id_servicios = s.id_servicios
+        ORDER BY p.fecha_pedido DESC
+    ",
+        
+        
+        
     "instrumentos" => "
         SELECT id, serie, nombre, categoria, estado, fecha_vencimiento_calibracion
         FROM instrumentos
