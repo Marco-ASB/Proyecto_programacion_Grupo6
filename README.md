@@ -1,4 +1,4 @@
-1. Qué trae la aplicación
+## 1. Qué trae la aplicación
 
 | Módulo | ¿Qué hace? |
 | :--- | :--- |
