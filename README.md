@@ -1,4 +1,5 @@
 1. Qué trae la aplicación
+
 | Módulo | ¿Qué hace? |
 | :--- | :--- |
 | **Login con roles y permisos** | Administrador, Técnico y Almacén; contraseñas cifradas con `password_hash`. |
